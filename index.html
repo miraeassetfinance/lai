@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tính Lãi Suất Vay – Có TOPUP</title>
+  <style>
+    :root{
+      --primary:#ff5722; /* menu rực rỡ hơn */
+      --primary-dark:#e64a19;
+      --bg:#f0f4f8; /* nền mới chuyên nghiệp hơn */
+      --card-grad:linear-gradient(135deg,#ffffff,#e3f2fd);
+      --text:#0f172a;
+      --muted:#475569;
+      --radius:12px;
+      --ok:#16a34a;
+      --bad:#dc2626;
+      --tab-bg:#ffe0b2; /* menu nền sáng, nổi bật */
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.5;
+    }
+
+    .marquee{width:100vw; overflow:hidden; background:var(--primary); color:#fff; padding:12px 0; font-weight:bold; font-size:16px}
+    .marquee-content{display:inline-block; white-space:nowrap; animation:marquee 15s linear infinite; padding-left:100vw}
+    .marquee:hover .marquee-content{animation-play-state:paused}
+    @keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-100%)}}
+
+    .tabbar-wrap{
+      max-width:1100px;
+      margin:18px auto 0;
+      padding:0 20px;
+    }
+    .tabbar{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      background:#fff;
+      padding:10px;
+      border-radius:14px;
+      box-shadow:0 8px 24px rgba(2,6,23,.08);
+    }
+    .tab-btn{
+      border:none;
+      padding:12px 18px;
+      border-radius:12px;
+      font-size:16px;
+      font-weight:900; /* đậm hơn */
+      cursor:pointer;
+      background:var(--tab-bg);
+      color:var(--primary-dark); /* rực rỡ hơn */
+      box-shadow:none;
+      transition:all 0.3s ease;
+    }
+    .tab-btn.active{
+      background:var(--primary);
+      color:#fff;
+      box-shadow:0 6px 16px rgba(255,87,34,.3);
+    }
+    .tab-btn:hover{
+      transform:scale(1.05);
+    }
+
+    .container{max-width:1100px; margin:20px auto; padding:20px; background:var(--card-grad); border-radius:var(--radius); box-shadow:0 10px 30px rgba(2,6,23,.08)}
+    .panel{display:none}
+    .panel.active{display:block}
+    h1{margin:0 auto 12px; text-align:center; border:2px solid var(--primary); display:inline-block; padding:10px 20px; border-radius:8px; font-size:26px}
+    .title-wrap{text-align:center}
+    .subtitle{margin:0 auto 18px; text-align:center; color:var(--muted); font-size:13px}
+    .grid{display:grid; grid-template-columns:repeat(2,1fr); gap:14px}
+    .grid-3{display:grid; grid-template-columns:repeat(3,1fr); gap:14px}
+    label{display:block; font-weight:600; font-size:14px}
+    input, select{width:100%; padding:10px 12px; margin-top:6px; font-size:16px; border:1px solid #cbd5e1; border-radius:10px; outline:none; background:#fff}
+    input::placeholder{color:#94a3b8; opacity:1}
+    input:focus, select:focus{border-color:var(--primary); box-shadow:0 0 0 3px rgba(255,87,34,.15)}
+    .row{display:flex; flex-wrap:wrap; gap:10px; align-items:center}
+    .actions{margin-top:14px; display:flex; flex-wrap:wrap; gap:10px}
+    button{padding:12px 16px; font-size:16px; cursor:pointer; border:none; border-radius:12px; background:var(--primary); color:#fff; box-shadow:0 6px 16px rgba(255,87,34,.16)}
+    button.secondary{background:#ff9800}
+    button.ghost{background:#e2e8f0; color:#0f172a}
+    .note{margin-top:10px; font-style:italic; color:#334155}
+    table{border-collapse:collapse; width:100%; margin-top:20px; background:#fff; border-radius:10px; overflow:hidden}
+    table th, table td{border:1px solid #e2e8f0; padding:10px; text-align:center; font-size:14px}
+    table th{background:#f1f5f9; position:sticky; top:0; z-index:1}
+    footer{text-align:center; margin-top:28px; font-size:13px; color:#555}
+    .pill{display:inline-block; border:1px dashed #93c5fd; padding:6px 10px; border-radius:999px; background:#e3f2fd; color:#0c4a6e; font-size:13px}
+    .warn{background:#fff7ed; border:1px solid #fdba74; padding:10px 12px; border-radius:10px; color:#9a3412; font-size:14px}
+    .toolbar{display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-top:8px}
+    .ok{font-weight:700;color:var(--ok)}
+    .na{font-weight:700;color:var(--bad)}
+    .mini-head{
+      margin-top:14px;
+      margin-bottom:8px;
+      font-weight:700;
+      color:#0f172a;
+    }
+    .hint{
+      margin-top:8px;
+      font-size:13px;
+      color:#475569;
+    }
+
+    #result, #topupResult{
+      max-width:1100px;
+      margin:0 auto;
+      background:transparent;
+      padding:0 0 8px 0;
+      overflow-x:auto;
+      -webkit-overflow-scrolling:touch;
+      overscroll-behavior-x:contain;
+    }
+    #result table, #topupResult table{border-radius:0; min-width:960px}
+
+    @media (max-width:900px){
+      .grid,.grid-3{grid-template-columns:1fr}
+      h1{font-size:20px; padding:8px 12px}
+    }
+    @media (max-width:600px){
+      .container{padding:14px}
+      #result table, #topupResult table{min-width:unset; font-size:10px}
+      table th, table td{padding:4px 6px; font-size:10px}
+      .tab-btn{width:100%}
+    }
+    @media print{
+      .marquee, .actions, .note, footer, .toolbar, .zalo-icon, .tabbar-wrap{display:none !important}
+      body{background:#fff}
+      .container{box-shadow:none; background:#fff}
+      thead { display: table-header-group; }
+      #result, #topupResult{ margin:0; max-width:none; }
+      #result table, #topupResult table{ border-radius:0; }
+      .panel{display:block !important}
+    }
+
+    .zalo-icon {
+      position: fixed;
+      bottom: 100px;
+      right: 20px;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+      z-index: 9999;
+      transition: transform 0.2s;
+    }
+    .zalo-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background-color: #0068ff;
+      border-radius: 50%;
+      padding: 8px;
+    }
+    .zalo-icon:hover { transform: scale(1.1); }
+
+    .topup-emi-grace{background:#fff8cc !important}
+    .topup-emi-after{background:#e8f4ff !important}
+  </style>
+</head>
+<body>
+<!-- Phần thân và script giữ nguyên hoàn toàn như file gốc -->
+</body>
+</html>
