@@ -4,313 +4,164 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- FONT ĐẸP -->
+  <!-- FONT MỚI -->
   <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 
   <title>Tính Lãi Suất Vay – Có TOPUP</title>
-
   <style>
     :root{
       --primary:#2563eb;
       --primary-dark:#1e40af;
       --bg:linear-gradient(135deg,#e0f2fe,#f8fafc,#e0e7ff);
-      --card-grad:linear-gradient(145deg,#ffffff,#e6f0ff);
+      --card-grad:linear-gradient(145deg,#ffffff,#eef5ff);
       --text:#0f172a;
       --muted:#475569;
-      --radius:14px;
+      --radius:12px;
       --ok:#16a34a;
       --bad:#dc2626;
       --tab-bg:#e2e8f0;
     }
-
     *{box-sizing:border-box}
-
+    html,body{height:100%}
     body{
       margin:0;
-      font-family:'Be Vietnam Pro', sans-serif;
+      font-family:'Be Vietnam Pro', Arial, Helvetica, sans-serif;
       background:var(--bg);
       color:var(--text);
+      line-height:1.5;
     }
 
-    /* MARQUEE */
-    .marquee{
-      width:100%;
-      overflow:hidden;
-      background:linear-gradient(90deg,#2563eb,#06b6d4);
-      color:#fff;
-      padding:14px 0;
-      font-weight:700;
-      font-size:16px;
-    }
+    .marquee{width:100vw; overflow:hidden; background:linear-gradient(90deg,#2563eb,#06b6d4); color:#fff; padding:12px 0; font-weight:800; font-size:16px}
+    .marquee-content{display:inline-block; white-space:nowrap; animation:marquee 15s linear infinite; padding-left:100vw}
+    .marquee:hover .marquee-content{animation-play-state:paused}
+    @keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-100%)}}
 
-    .marquee-content{
-      display:inline-block;
-      white-space:nowrap;
-      animation:marquee 15s linear infinite;
-      padding-left:100%;
-    }
+    .tabbar-wrap{max-width:1100px; margin:18px auto 0; padding:0 20px}
+    .tabbar{display:flex; flex-wrap:wrap; gap:10px; background:#fff; padding:10px; border-radius:14px; box-shadow:0 8px 24px rgba(2,6,23,.12)}
+    .tab-btn{border:none; padding:12px 18px; border-radius:12px; font-size:15px; font-weight:800; cursor:pointer; background:linear-gradient(135deg,#dbeafe,#e0f2fe); color:#0f172a}
+    .tab-btn.active{background:linear-gradient(135deg,#2563eb,#06b6d4); color:#fff; box-shadow:0 6px 16px rgba(0,123,255,.3)}
 
-    @keyframes marquee{
-      0%{transform:translateX(0)}
-      100%{transform:translateX(-100%)}
-    }
-
-    /* TAB */
-    .tabbar-wrap{
-      max-width:1100px;
-      margin:20px auto;
-      padding:0 20px;
-    }
-
-    .tabbar{
-      display:flex;
-      gap:12px;
-      background:#fff;
-      padding:12px;
-      border-radius:16px;
-      box-shadow:0 10px 30px rgba(0,0,0,0.1);
-    }
-
-    .tab-btn{
-      flex:1;
-      padding:14px;
-      border-radius:12px;
-      font-weight:800;
-      font-size:16px;
-      border:none;
-      cursor:pointer;
-      background:linear-gradient(135deg,#cbd5f5,#e0f2fe);
-      color:#1e293b;
-      transition:0.3s;
-    }
-
-    .tab-btn.active{
-      background:linear-gradient(135deg,#2563eb,#06b6d4);
-      color:#fff;
-      box-shadow:0 6px 18px rgba(37,99,235,.4);
-      transform:scale(1.05);
-    }
-
-    /* CONTAINER */
-    .container{
-      max-width:1100px;
-      margin:20px auto;
-      padding:25px;
-      background:var(--card-grad);
-      border-radius:var(--radius);
-      box-shadow:0 15px 40px rgba(0,0,0,.1);
-    }
-
-    h1{
-      text-align:center;
-      font-size:28px;
-      font-weight:800;
-      color:#1e3a8a;
-      border-bottom:3px solid #2563eb;
-      display:inline-block;
-      padding-bottom:6px;
-    }
-
-    .title-wrap{text-align:center}
-
-    .subtitle{
-      text-align:center;
-      color:#64748b;
-      margin-bottom:20px;
-      font-size:13px;
-    }
-
-    /* INPUT */
-    .grid{
-      display:grid;
-      grid-template-columns:repeat(2,1fr);
-      gap:14px;
-    }
-
-    .grid-3{
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:14px;
-    }
-
-    label{
-      font-weight:600;
-      font-size:14px;
-    }
-
-    input,select{
-      width:100%;
-      padding:12px;
-      border-radius:10px;
-      border:1px solid #cbd5e1;
-      font-size:15px;
-      margin-top:6px;
-    }
-
-    input:focus{
-      border-color:#2563eb;
-      box-shadow:0 0 0 3px rgba(37,99,235,.2);
-    }
-
-    /* BUTTON */
-    button{
-      padding:12px 16px;
-      border:none;
-      border-radius:12px;
-      font-weight:700;
-      cursor:pointer;
-      background:linear-gradient(135deg,#2563eb,#06b6d4);
-      color:#fff;
-      transition:0.2s;
-    }
-
-    button:hover{
-      transform:translateY(-2px);
-      box-shadow:0 6px 20px rgba(0,0,0,.2);
-    }
-
-    .ghost{
-      background:#e2e8f0;
-      color:#0f172a;
-    }
-
-    .secondary{
-      background:linear-gradient(135deg,#0ea5e9,#22c55e);
-    }
-
-    .actions{
-      margin-top:16px;
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-    }
-
-    /* TABLE */
-    table{
-      width:100%;
-      border-collapse:collapse;
-      margin-top:20px;
-      background:#fff;
-      border-radius:10px;
-      overflow:hidden;
-    }
-
-    th{
-      background:#2563eb;
-      color:#fff;
-      font-weight:700;
-    }
-
-    th,td{
-      padding:10px;
-      text-align:center;
-      border:1px solid #e2e8f0;
-      font-size:13px;
-    }
-
-    /* PILL */
-    .pill{
-      background:#e0f2fe;
-      padding:6px 10px;
-      border-radius:999px;
-      font-size:13px;
-    }
-
-    .ok{color:#16a34a;font-weight:700}
-    .na{color:#dc2626;font-weight:700}
-
-    footer{
-      text-align:center;
-      margin-top:20px;
-      font-size:13px;
-      color:#666;
-    }
-
+    .container{max-width:1100px; margin:20px auto; padding:20px; background:var(--card-grad); border-radius:var(--radius); box-shadow:0 10px 30px rgba(2,6,23,.12)}
     .panel{display:none}
     .panel.active{display:block}
+    h1{margin:0 auto 12px; text-align:center; border:2px solid var(--primary); display:inline-block; padding:10px 20px; border-radius:8px; font-size:26px}
+    .title-wrap{text-align:center}
+    .subtitle{margin:0 auto 18px; text-align:center; color:var(--muted); font-size:13px}
+        .grid{display:grid; grid-template-columns:repeat(2,1fr); gap:14px}
+    .grid-3{display:grid; grid-template-columns:repeat(3,1fr); gap:14px}
+    label{display:block; font-weight:600; font-size:14px}
+    input, select{width:100%; padding:10px 12px; margin-top:6px; font-size:16px; border:1px solid #cbd5e1; border-radius:10px; outline:none; background:#fff}
+    input::placeholder{color:#94a3b8; opacity:1}
+    input:focus, select:focus{border-color:var(--primary); box-shadow:0 0 0 3px rgba(0,123,255,.12)}
 
-    @media(max-width:900px){
-      .grid,.grid-3{grid-template-columns:1fr}
-    }
+    .row{display:flex; flex-wrap:wrap; gap:10px; align-items:center}
+    .actions{margin-top:14px; display:flex; flex-wrap:wrap; gap:10px}
+
+    button{padding:12px 16px; font-size:16px; cursor:pointer; border:none; border-radius:12px; background:linear-gradient(135deg,#2563eb,#06b6d4); color:#fff}
+    button.secondary{background:#0ea5e9}
+    button.ghost{background:#e2e8f0; color:#0f172a}
+
+    .note{margin-top:10px; font-style:italic; color:#334155}
+    table{border-collapse:collapse; width:100%; margin-top:20px; background:#fff; border-radius:10px; overflow:hidden}
+    table th, table td{border:1px solid #e2e8f0; padding:10px; text-align:center; font-size:14px}
+    table th{background:#2563eb; color:#fff; position:sticky; top:0; z-index:1}
+
+    footer{text-align:center; margin-top:28px; font-size:13px; color:#555}
+
+    .pill{display:inline-block; border:1px dashed #93c5fd; padding:6px 10px; border-radius:999px; background:#eff6ff; color:#0c4a6e; font-size:13px}
+    .warn{background:#fff7ed; border:1px solid #fdba74; padding:10px 12px; border-radius:10px; color:#9a3412; font-size:14px}
+    .toolbar{display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-top:8px}
+    .ok{font-weight:700;color:var(--ok)}
+    .na{font-weight:700;color:var(--bad)}
   </style>
 </head>
-
 <body>
-
-<div class="marquee">
-  <div class="marquee-content">
-    💸 Chào mừng đến với công cụ Tính Lãi Suất của Team Mirae Asset NGỌC TRÂN! 📞 Liên hệ Zalo: 0964307247 🚀
-  </div>
-</div>
-
-<div class="tabbar-wrap">
-  <div class="tabbar">
-    <button class="tab-btn active" data-tab="panel-normal">TÍNH LÃI SUẤT PL</button>
-    <button class="tab-btn" data-tab="panel-topup">TÍNH LÃI TOPUP</button>
-  </div>
-</div>
-
-<!-- PANEL 1 -->
-<div class="container panel active" id="panel-normal">
-  <div class="title-wrap">
-    <h1>CÔNG CỤ TÍNH LÃI SUẤT</h1>
+    <div class="marquee">
+    <div class="marquee-content">💸 Chào mừng đến với công cụ Tính Lãi Suất của Team Mirae Asset NGỌC TRÂN! 📞 Liên hệ Zalo: 0964307247 để được hỗ trợ nhanh chóng và uy tín! 🚀</div>
   </div>
 
-  <div class="grid">
-    <div><label>Ngày Giải Ngân</label><input type="date" id="disbursalDate"></div>
-    <div><label>Ngày Kỳ Đóng Đầu Tiên</label><input type="date" id="firstEmiDate"></div>
-    <div><label>Số Tiền Vay</label><input id="loanAmount"></div>
-    <div><label>% Bảo Hiểm</label><input id="insurancePercent" value="7.7"></div>
-    <div><label>Lãi Suất</label><input id="interestRate" value="52"></div>
-    <div><label>Số Tháng</label><input id="months" value="24"></div>
+  <div class="tabbar-wrap">
+    <div class="tabbar">
+      <button class="tab-btn active" data-tab="panel-normal">Tính Lãi Suất PL</button>
+      <button class="tab-btn" data-tab="panel-topup">Tính Lãi TOPUP</button>
+    </div>
   </div>
 
-  <div class="actions">
-    <button id="btnCalc">TÍNH NGAY</button>
-    <button class="secondary">EXCEL</button>
-    <button class="ghost">PDF</button>
+  <div class="container panel active" id="panel-normal">
+    <div class="title-wrap">
+      <h1>Công Cụ Tính Lãi Suất PL</h1>
+    </div>
+    <p class="subtitle"><span class="pill">Bản nâng cao • Chuẩn vi-VN • Excel/PDF • 30/360 • Làm tròn</span></p>
+
+    <div class="grid">
+      <div><label>Ngày Giải Ngân</label><input type="date" id="disbursalDate" /></div>
+      <div><label>Ngày Kỳ Đóng Đầu Tiên</label><input type="date" id="firstEmiDate" /></div>
+      <div><label>Số Tiền Vay (VND)</label><input type="text" id="loanAmount" /></div>
+      <div><label>% Bảo Hiểm Khoản Vay (nếu có)</label><input type="number" id="insurancePercent" value="7.7" /></div>
+      <div><label>Lãi Suất (%/năm)</label><input type="number" id="interestRate" value="52" /></div>
+      <div><label>Số Kỳ Vay (tháng)</label><input type="number" id="months" value="24" /></div>
+      <div class="row">
+        <label><input type="checkbox" id="proRateFirst" checked /> Tính lãi theo ngày cho kỳ đầu</label>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button id="btnCalc">Tính Lịch Thanh Toán</button>
+      <button class="secondary" id="btnExcel">Xuất Excel</button>
+      <button class="ghost" id="btnPDF">Tải PDF</button>
+      <button class="ghost" id="btnCSV">Xuất CSV</button>
+      <button class="ghost" id="btnReset">Nhập Lại</button>
+    </div>
+
+    <div class="toolbar">
+      <label><input type="checkbox" id="remember" checked> Lưu thông tin nhập</label>
+      <button class="ghost" id="btnToday">Điền nhanh hôm nay</button>
+    </div>
+
+    <div id="summary"></div>
   </div>
 
-  <div id="summary"></div>
-</div>
+  <div id="result"></div>
 
-<div id="result"></div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
-<!-- PANEL 2 -->
-<div class="container panel" id="panel-topup">
-  <div class="title-wrap">
-    <h1>TÍNH TOPUP</h1>
-  </div>
+  <script>
+    function viNumber(n){ return Number(n||0).toLocaleString('vi-VN'); }
+    function parseNumber(str){ return Number(String(str).replace(/[^\d]/g,''))||0; }
 
-  <div class="grid-3">
-    <input id="topupCurrentEmi" placeholder="EMI hiện tại">
-    <input id="topupInterestRate" value="55">
-    <input id="topupGracePeriod" value="14">
-    <input id="topupLoan" placeholder="Số tiền vay">
-  </div>
+    function calculateLoan(){
+      const loanAmount=parseNumber(document.getElementById('loanAmount').value);
+      const insurancePercent=Number(document.getElementById('insurancePercent').value);
+      const interestRate=Number(document.getElementById('interestRate').value);
+      const months=Number(document.getElementById('months').value);
 
-  <div class="actions">
-    <button id="btnCalcTopup">TÍNH TOPUP</button>
-  </div>
+      const totalLoan=loanAmount*(1+insurancePercent/100);
+      const monthlyRate=interestRate/12/100;
+      const EMI=totalLoan*monthlyRate/(1-Math.pow(1+monthlyRate,-months));
 
-  <div id="topupSummary"></div>
-  <div id="topupResult"></div>
-</div>
+      let balance=totalLoan;
+      let html='<table><thead><tr><th>Kỳ</th><th>Gốc</th><th>Lãi</th><th>Tổng</th><th>Dư nợ</th></tr></thead><tbody>';
 
-<footer>
-  © 2026 - Thiết Kế Bởi Mr.Thiên
-</footer>
+      for(let k=1;k<=months;k++){
+        const interest=balance*monthlyRate;
+        const principal=EMI-interest;
+        balance-=principal;
+        html+=`<tr>
+          <td>${k}</td>
+          <td>${viNumber(principal)}</td>
+          <td>${viNumber(interest)}</td>
+          <td>${viNumber(EMI)}</td>
+          <td>${viNumber(balance)}</td>
+        </tr>`;
+      }
 
-<script>
-document.querySelectorAll('.tab-btn').forEach(btn=>{
-  btn.onclick=()=>{
-    document.querySelectorAll('.tab-btn').forEach(x=>x.classList.remove('active'));
-    document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));
-    btn.classList.add('active');
-    document.getElementById(btn.dataset.tab).classList.add('active');
-  }
-});
-</script>
+      html+='</tbody></table>';
+      document.getElementById('result').innerHTML=html;
+    }
+
+    document.getElementById('btnCalc').addEventListener('click',calculateLoan);
+  </script>
 
 </body>
 </html>
