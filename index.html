@@ -3,17 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- FONT MỚI -->
-  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-
   <title>Tính Lãi Suất Vay – Có TOPUP</title>
   <style>
     :root{
-      --primary:#2563eb;
-      --primary-dark:#1e40af;
-      --bg:linear-gradient(135deg,#e0f2fe,#f8fafc,#e0e7ff);
-      --card-grad:linear-gradient(145deg,#ffffff,#eef5ff);
+      --primary:#007bff;
+      --primary-dark:#005dc1;
+      --bg:#f5faff;
+      --card-grad:linear-gradient(135deg,#d0e6f7,#f5faff);
       --text:#0f172a;
       --muted:#475569;
       --radius:12px;
@@ -25,58 +21,148 @@
     html,body{height:100%}
     body{
       margin:0;
-      font-family:'Be Vietnam Pro', Arial, Helvetica, sans-serif;
-      background:var(--bg);
+      font-family:Arial, Helvetica, sans-serif;
+      background: url('https://images.unsplash.com/photo-1565372918684-ccfb9c1b1a2d?auto=format&fit=crop&w=1600&q=80') no-repeat center center fixed;
+      background-size: cover;
       color:var(--text);
       line-height:1.5;
     }
 
-    .marquee{width:100vw; overflow:hidden; background:linear-gradient(90deg,#2563eb,#06b6d4); color:#fff; padding:12px 0; font-weight:800; font-size:16px}
+    .marquee{width:100vw; overflow:hidden; background:var(--primary); color:#fff; padding:12px 0; font-weight:bold; font-size:16px}
     .marquee-content{display:inline-block; white-space:nowrap; animation:marquee 15s linear infinite; padding-left:100vw}
     .marquee:hover .marquee-content{animation-play-state:paused}
     @keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-100%)}}
 
-    .tabbar-wrap{max-width:1100px; margin:18px auto 0; padding:0 20px}
-    .tabbar{display:flex; flex-wrap:wrap; gap:10px; background:#fff; padding:10px; border-radius:14px; box-shadow:0 8px 24px rgba(2,6,23,.12)}
-    .tab-btn{border:none; padding:12px 18px; border-radius:12px; font-size:15px; font-weight:800; cursor:pointer; background:linear-gradient(135deg,#dbeafe,#e0f2fe); color:#0f172a}
-    .tab-btn.active{background:linear-gradient(135deg,#2563eb,#06b6d4); color:#fff; box-shadow:0 6px 16px rgba(0,123,255,.3)}
+    .tabbar-wrap{
+      max-width:1100px;
+      margin:18px auto 0;
+      padding:0 20px;
+    }
+    .tabbar{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      background:#ffffffcc;
+      padding:10px;
+      border-radius:14px;
+      box-shadow:0 8px 24px rgba(2,6,23,.08);
+      backdrop-filter: blur(6px);
+    }
+    .tab-btn{
+      border:none;
+      padding:12px 18px;
+      border-radius:12px;
+      font-size:15px;
+      font-weight:700;
+      cursor:pointer;
+      background:var(--tab-bg);
+      color:#0f172a;
+      box-shadow:none;
+    }
+    .tab-btn.active{
+      background:var(--primary);
+      color:#fff;
+      box-shadow:0 6px 16px rgba(0,123,255,.16);
+    }
 
-    .container{max-width:1100px; margin:20px auto; padding:20px; background:var(--card-grad); border-radius:var(--radius); box-shadow:0 10px 30px rgba(2,6,23,.12)}
+    .container{max-width:1100px; margin:20px auto; padding:20px; background:#ffffffcc; border-radius:var(--radius); box-shadow:0 10px 30px rgba(2,6,23,.08); backdrop-filter: blur(6px)}
     .panel{display:none}
     .panel.active{display:block}
     h1{margin:0 auto 12px; text-align:center; border:2px solid var(--primary); display:inline-block; padding:10px 20px; border-radius:8px; font-size:26px}
     .title-wrap{text-align:center}
     .subtitle{margin:0 auto 18px; text-align:center; color:var(--muted); font-size:13px}
-        .grid{display:grid; grid-template-columns:repeat(2,1fr); gap:14px}
+    .grid{display:grid; grid-template-columns:repeat(2,1fr); gap:14px}
     .grid-3{display:grid; grid-template-columns:repeat(3,1fr); gap:14px}
     label{display:block; font-weight:600; font-size:14px}
     input, select{width:100%; padding:10px 12px; margin-top:6px; font-size:16px; border:1px solid #cbd5e1; border-radius:10px; outline:none; background:#fff}
     input::placeholder{color:#94a3b8; opacity:1}
     input:focus, select:focus{border-color:var(--primary); box-shadow:0 0 0 3px rgba(0,123,255,.12)}
-
     .row{display:flex; flex-wrap:wrap; gap:10px; align-items:center}
     .actions{margin-top:14px; display:flex; flex-wrap:wrap; gap:10px}
-
-    button{padding:12px 16px; font-size:16px; cursor:pointer; border:none; border-radius:12px; background:linear-gradient(135deg,#2563eb,#06b6d4); color:#fff}
+    button{padding:12px 16px; font-size:16px; cursor:pointer; border:none; border-radius:12px; background:var(--primary); color:#fff; box-shadow:0 6px 16px rgba(0,123,255,.16)}
     button.secondary{background:#0ea5e9}
     button.ghost{background:#e2e8f0; color:#0f172a}
-
     .note{margin-top:10px; font-style:italic; color:#334155}
     table{border-collapse:collapse; width:100%; margin-top:20px; background:#fff; border-radius:10px; overflow:hidden}
     table th, table td{border:1px solid #e2e8f0; padding:10px; text-align:center; font-size:14px}
-    table th{background:#2563eb; color:#fff; position:sticky; top:0; z-index:1}
-
+    table th{background:#f1f5f9; position:sticky; top:0; z-index:1}
     footer{text-align:center; margin-top:28px; font-size:13px; color:#555}
-
     .pill{display:inline-block; border:1px dashed #93c5fd; padding:6px 10px; border-radius:999px; background:#eff6ff; color:#0c4a6e; font-size:13px}
     .warn{background:#fff7ed; border:1px solid #fdba74; padding:10px 12px; border-radius:10px; color:#9a3412; font-size:14px}
     .toolbar{display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-top:8px}
     .ok{font-weight:700;color:var(--ok)}
     .na{font-weight:700;color:var(--bad)}
+    .mini-head{
+      margin-top:14px;
+      margin-bottom:8px;
+      font-weight:700;
+      color:#0f172a;
+    }
+    .hint{
+      margin-top:8px;
+      font-size:13px;
+      color:#475569;
+    }
+
+    #result, #topupResult{
+      max-width:1100px;
+      margin:0 auto;
+      background:transparent;
+      padding:0 0 8px 0;
+      overflow-x:auto;
+      -webkit-overflow-scrolling:touch;
+      overscroll-behavior-x:contain;
+    }
+    #result table, #topupResult table{border-radius:0; min-width:960px}
+
+    @media (max-width:900px){
+      .grid,.grid-3{grid-template-columns:1fr}
+      h1{font-size:20px; padding:8px 12px}
+    }
+    @media (max-width:600px){
+      .container{padding:14px}
+      #result table, #topupResult table{min-width:unset; font-size:10px}
+      table th, table td{padding:4px 6px; font-size:10px}
+      .tab-btn{width:100%}
+    }
+    @media print{
+      .marquee, .actions, .note, footer, .toolbar, .zalo-icon, .tabbar-wrap{display:none !important}
+      body{background:#fff}
+      .container{box-shadow:none; background:#fff}
+      thead { display: table-header-group; }
+      #result, #topupResult{ margin:0; max-width:none; }
+      #result table, #topupResult table{ border-radius:0; }
+      .panel{display:block !important}
+    }
+
+    .zalo-icon {
+      position: fixed;
+      bottom: 100px;
+      right: 20px;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+      z-index: 9999;
+      transition: transform 0.2s;
+    }
+    .zalo-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background-color: #0068ff;
+      border-radius: 50%;
+      padding: 8px;
+    }
+    .zalo-icon:hover { transform: scale(1.1); }
+
+    .topup-emi-grace{background:#fff8cc !important}
+    .topup-emi-after{background:#e8f4ff !important}
   </style>
 </head>
 <body>
-    <div class="marquee">
+  <div class="marquee">
     <div class="marquee-content">💸 Chào mừng đến với công cụ Tính Lãi Suất của Team Mirae Asset NGỌC TRÂN! 📞 Liên hệ Zalo: 0964307247 để được hỗ trợ nhanh chóng và uy tín! 🚀</div>
   </div>
 
@@ -93,20 +179,20 @@
     </div>
     <p class="subtitle"><span class="pill">Bản nâng cao • Chuẩn vi-VN • Excel/PDF • 30/360 • Làm tròn</span></p>
 
-    <div class="grid">
+    <div class="grid" role="form" aria-label="loan-form">
       <div><label>Ngày Giải Ngân</label><input type="date" id="disbursalDate" /></div>
       <div><label>Ngày Kỳ Đóng Đầu Tiên</label><input type="date" id="firstEmiDate" /></div>
-      <div><label>Số Tiền Vay (VND)</label><input type="text" id="loanAmount" /></div>
-      <div><label>% Bảo Hiểm Khoản Vay (nếu có)</label><input type="number" id="insurancePercent" value="7.7" /></div>
-      <div><label>Lãi Suất (%/năm)</label><input type="number" id="interestRate" value="52" /></div>
-      <div><label>Số Kỳ Vay (tháng)</label><input type="number" id="months" value="24" /></div>
-      <div class="row">
-        <label><input type="checkbox" id="proRateFirst" checked /> Tính lãi theo ngày cho kỳ đầu</label>
+      <div><label>Số Tiền Vay (VND)</label><input type="text" id="loanAmount" inputmode="numeric" placeholder="VD: 20.000.000" /></div>
+      <div><label>% Bảo Hiểm Khoản Vay (nếu có)</label><input type="number" id="insurancePercent" value="7.7" step="0.1" min="0" /></div>
+      <div><label>Lãi Suất (%/năm)</label><input type="number" id="interestRate" value="52" step="0.01" min="0.01" /></div>
+      <div><label>Số Kỳ Vay (tháng)</label><input type="number" id="months" value="24" min="1" /></div>
+      <div class="row" style="align-items:flex-end">
+        <label style="width:100%"><input type="checkbox" id="proRateFirst" checked /> Tính lãi theo ngày cho kỳ đầu</label>
       </div>
     </div>
 
     <div class="actions">
-      <button id="btnCalc">Tính Lịch Thanh Toán</button>
+      <button id="btnCalc">Tính Lãi Suất</button>
       <button class="secondary" id="btnExcel">Xuất Excel</button>
       <button class="ghost" id="btnPDF">Tải PDF</button>
       <button class="ghost" id="btnCSV">Xuất CSV</button>
@@ -114,14 +200,80 @@
     </div>
 
     <div class="toolbar">
-      <label><input type="checkbox" id="remember" checked> Lưu thông tin nhập</label>
+      <label class="row" style="gap:6px"><input type="checkbox" id="remember" checked> Lưu thông tin nhập (LocalStorage)</label>
       <button class="ghost" id="btnToday">Điền nhanh hôm nay</button>
     </div>
 
-    <div id="summary"></div>
+    <div id="alerts" style="margin-top:12px"></div>
+    <div id="summary" style="margin-top:12px"></div>
   </div>
 
   <div id="result"></div>
+
+  <div class="container panel" id="panel-topup">
+    <div class="title-wrap">
+      <h1>Tính Lãi TOPUP</h1>
+    </div>
+    <p class="subtitle"><span class="pill">Dựa theo logic file Excel TOPUP • Có ân hạn • Có/không bảo hiểm • So sánh nhiều kỳ hạn</span></p>
+
+    <div class="grid-3" role="form" aria-label="topup-form">
+      <div>
+        <label>Số tiền trả hàng tháng khoản vay hiện tại (EMI)</label>
+        <input type="text" id="topupCurrentEmi" placeholder="VD 2.000.000" inputmode="numeric" />
+      </div>
+      <div>
+        <label>Lãi suất khoản vay TOPUP (%/năm)</label>
+        <input type="number" id="topupInterestRate" value="48" step="0.01" min="0" />
+      </div>
+      <div>
+        <label>Số kỳ ân hạn (tháng)</label>
+        <input type="number" id="topupGracePeriod" value="14" step="1" min="0" />
+      </div>
+      <div>
+        <label>Số tiền vay TOPUP (LOAN)</label>
+        <input type="text" id="topupLoan" placeholder="VD 20.000.000" inputmode="numeric" />
+      </div>
+      <div>
+        <label>Bảo hiểm khoản vay</label>
+        <select id="topupInsuranceYesNo">
+          <option value="YES" selected>YES</option>
+          <option value="NO">NO</option>
+        </select>
+      </div>
+      <div>
+        <label>% Bảo hiểm khoản vay</label>
+        <input type="number" id="topupInsuranceRate" value="7.7" step="0.1" min="0" />
+      </div>
+    </div>
+
+    <div class="actions">
+      <button id="btnCalcTopup">Tính TOPUP</button>
+      <button class="ghost" id="btnResetTopup">Nhập lại TOPUP</button>
+    </div>
+
+    <div class="hint">File Excel TOPUP đang dùng logic: Tổng tiền vay = LOAN + INS, EMI ân hạn = (Tổng tiền vay × lãi suất / 365 × số ngày) + 12.000, sau ân hạn dùng PMT theo số tháng còn lại.</div>
+    <div id="topupSummary" style="margin-top:12px"></div>
+    <div id="topupResult"></div>
+  </div>
+
+  <div class="container">
+    <p class="note">* Bảng tính mang tính chất tham khảo. Điều khoản chính thức tùy theo hồ sơ và chính sách hiện tại.</p>
+    <footer><b>© Copyright 2026-Thiết Kế Bởi Mr.Thiên</b></footer>
+  </div>
+
+  <a href="https://zalo.me/0964307247" target="_blank" class="zalo-icon">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Icon_of_Zalo.svg" alt="Zalo" />
+  </a>
+
+  <div style="text-align:center; margin:20px 0;">
+    <div style="font-weight:bold; margin-bottom:6px;">Lượt Truy Cập</div>
+    <a href="https://www.hitwebcounter.com/compress-pdf" target="_blank">
+      <img src="https://hitwebcounter.com/counter/counter.php?page=21437099&style=0006&nbdigits=6&type=page&initCount=2534"
+           title="Compress"
+           alt="Compress"
+           border="0" />
+    </a>
+  </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
@@ -129,39 +281,272 @@
   <script>
     function viNumber(n){ return Number(n||0).toLocaleString('vi-VN'); }
     function parseNumber(str){ return Number(String(str).replace(/[^\d]/g,''))||0; }
+    function addMonthsKeepDay(date, months){
+      const d=new Date(date); const day=d.getDate();
+      d.setDate(1); d.setMonth(d.getMonth()+months);
+      d.setDate(Math.min(day,new Date(d.getFullYear(),d.getMonth()+1,0).getDate()));
+      return d;
+    }
+    function roundByPolicy(value){ return Math.round(value/1000)*1000; }
+    function daysBetween(d1,d2){ return Math.round((d2-d1)/(1000*60*60*24)); }
 
-    function calculateLoan(){
+    function pmt(rate, nper, pv){
+      if (nper <= 0) return NaN;
+      if (rate === 0) return pv / nper;
+      return (rate * pv) / (1 - Math.pow(1 + rate, -nper));
+    }
+
+    document.querySelectorAll('.tab-btn').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        document.querySelectorAll('.tab-btn').forEach(x=>x.classList.remove('active'));
+        document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById(btn.dataset.tab).classList.add('active');
+      });
+    });
+
+    function validateInputs(){
+      const disbursalDateStr=document.getElementById('disbursalDate').value;
+      const firstEmiDateStr=document.getElementById('firstEmiDate').value;
       const loanAmount=parseNumber(document.getElementById('loanAmount').value);
       const insurancePercent=Number(document.getElementById('insurancePercent').value);
       const interestRate=Number(document.getElementById('interestRate').value);
       const months=Number(document.getElementById('months').value);
+      if(!disbursalDateStr||!firstEmiDateStr||loanAmount<=0||interestRate<=0||months<1) return null;
+      return {disbursalDate:new Date(disbursalDateStr),firstEmiDate:new Date(firstEmiDateStr),loanAmount,insurancePercent,interestRate,months};
+    }
 
+    function renderSummary(totalLoan,EMI,months){
+      document.getElementById('summary').innerHTML=`<div class="row">
+        <div class="pill">Tổng vay + BH: <b>${viNumber(totalLoan)}</b> VND</div>
+        <div class="pill">Số tháng vay: <b>${months}</b></div>
+        <div class="pill">Thanh toán mỗi kỳ (đã bao gồm phí thu hộ) ~ <b>${viNumber(Math.round(EMI+12000))}</b> VND</div>
+      </div>`;
+    }
+
+    function calculateLoan(){
+      const values=validateInputs();
+      if(!values){ alert("Vui lòng nhập đủ dữ liệu"); return; }
+      const {disbursalDate,firstEmiDate,loanAmount,insurancePercent,interestRate,months}=values;
       const totalLoan=loanAmount*(1+insurancePercent/100);
       const monthlyRate=interestRate/12/100;
       const EMI=totalLoan*monthlyRate/(1-Math.pow(1+monthlyRate,-months));
+      renderSummary(totalLoan,EMI,months);
 
       let balance=totalLoan;
-      let html='<table><thead><tr><th>Kỳ</th><th>Gốc</th><th>Lãi</th><th>Tổng</th><th>Dư nợ</th></tr></thead><tbody>';
+      let html='<table><thead><tr><th>Kỳ</th><th>Ngày</th><th>Gốc</th><th>Lãi</th><th>Thanh toán</th><th>Dư nợ cuối kỳ</th></tr></thead><tbody>';
 
+      let prevDate=disbursalDate;
       for(let k=1;k<=months;k++){
-        const interest=balance*monthlyRate;
-        const principal=EMI-interest;
-        balance-=principal;
+        let dueDate;
+        if(k===1){ dueDate=firstEmiDate; }
+        else if(k<months){ dueDate=addMonthsKeepDay(firstEmiDate,k-1); }
+        else{ dueDate=addMonthsKeepDay(firstEmiDate,months-1); }
+
+        let days=daysBetween(prevDate,dueDate);
+        if(k<months-1) days=30;
+        if(k===1) days=daysBetween(disbursalDate,firstEmiDate);
+        if(k===months) days=daysBetween(prevDate,dueDate);
+
+        const interest=roundByPolicy(balance*interestRate*days/360/100);
+        const principal=(k<months)? roundByPolicy(EMI-interest) : balance;
+        balance=Math.max(0,balance-principal);
+        const fee=12000;
+        const totalPay=principal+interest+fee;
+
         html+=`<tr>
           <td>${k}</td>
+          <td>${dueDate.toLocaleDateString('vi-VN')}</td>
           <td>${viNumber(principal)}</td>
           <td>${viNumber(interest)}</td>
-          <td>${viNumber(EMI)}</td>
+          <td>${viNumber(totalPay)}</td>
           <td>${viNumber(balance)}</td>
         </tr>`;
+        prevDate=dueDate;
       }
-
       html+='</tbody></table>';
       document.getElementById('result').innerHTML=html;
     }
 
-    document.getElementById('btnCalc').addEventListener('click',calculateLoan);
-  </script>
+    function exportExcel(){
+      const table=document.querySelector('#result table');
+      if(!table){alert('Không có dữ liệu');return;}
+      const wb=XLSX.utils.table_to_book(table,{sheet:"LichTra"});
+      XLSX.writeFile(wb,'Lich_Tra.xlsx');
+    }
+    function exportCSV(){
+      const table=document.querySelector('#result table');
+      if(!table){alert('Không có dữ liệu');return;}
+      const wb=XLSX.utils.table_to_book(table,{sheet:"LichTra"});
+      const csv=XLSX.utils.sheet_to_csv(wb.Sheets["LichTra"]);
+      const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
+      const link=document.createElement('a');
+      link.href=URL.createObjectURL(blob);
+      link.download='Lich_Tra.csv';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+    function exportPDF(){
+      const element=document.getElementById('result');
+      if(!element||!element.innerHTML.trim()){alert('Không có dữ liệu');return;}
+      html2pdf().set({margin:0.4,filename:'Lich_Tra.pdf',image:{type:'jpeg',quality:0.98},html2canvas:{scale:2},jsPDF:{unit:'in',format:'a4',orientation:'portrait'}}).from(element).save();
+    }
+    function resetForm(){ location.reload(); }
+    function fillToday(){
+      const today=new Date();
+      document.getElementById('disbursalDate').value=today.toISOString().split('T')[0];
+      const first=new Date(today);
+      first.setDate(first.getDate()+30);
+      document.getElementById('firstEmiDate').value=first.toISOString().split('T')[0];
+    }
 
+    function calculateTopup(){
+      const currentEmi = parseNumber(document.getElementById('topupCurrentEmi').value);
+      const annualRatePct = Number(document.getElementById('topupInterestRate').value);
+      const annualRate = annualRatePct / 100;
+      const gracePeriod = Number(document.getElementById('topupGracePeriod').value);
+      const loan = parseNumber(document.getElementById('topupLoan').value);
+      const insuranceOpt = document.getElementById('topupInsuranceYesNo').value;
+      const insuranceRatePct = Number(document.getElementById('topupInsuranceRate').value);
+      const fee = 12000;
+
+      if(currentEmi <= 0 || loan <= 0){
+        document.getElementById('topupSummary').innerHTML = '';
+        document.getElementById('topupResult').innerHTML = '';
+        return;
+      }
+
+      if(annualRate < 0 || gracePeriod < 0){
+        alert('Vui lòng nhập đầy đủ dữ liệu TOPUP hợp lệ');
+        document.getElementById('topupSummary').innerHTML = '';
+        document.getElementById('topupResult').innerHTML = '';
+        return;
+      }
+
+      const insurance = insuranceOpt === 'YES' ? loan * insuranceRatePct / 100 : 0;
+      const totalLoan = loan + insurance;
+      const graceEmi31 = totalLoan * annualRate / 365 * 31 + fee;
+      const graceEmi30 = totalLoan * annualRate / 365 * 30 + fee;
+      const graceEmi29 = totalLoan * annualRate / 365 * 29 + fee;
+      const graceEmi28 = totalLoan * annualRate / 365 * 28 + fee;
+      const maxEmi = currentEmi + graceEmi31;
+
+      const terms = [6,12,18,24,30,36];
+      let table = `<table><thead>
+        <tr>
+          <th>Kỳ hạn vay</th>
+          <th class="topup-emi-grace">EMI trong ân hạn</th>
+          <th class="topup-emi-after">EMI sau ân hạn</th>
+          <th>Số tháng góp</th>
+          <th>Trạng thái</th>
+          <th>Tổng gốc lãi</th>
+          <th>Tổng lãi</th>
+          <th>Lãi/tháng</th>
+        </tr>
+      </thead><tbody>`;
+      let anyOk = false;
+
+      terms.forEach(term=>{
+        const repayMonths = term - gracePeriod;
+        let emiAfterGrace = NaN;
+        let displayStatus = 'N/A';
+        let totalPI = 'N/A';
+        let totalInterest = 'N/A';
+        let interestPerMonth = 'N/A';
+
+        if(repayMonths > 0){
+          emiAfterGrace = pmt(annualRate/12, repayMonths, totalLoan);
+          const payAfterGraceWithFee = emiAfterGrace + fee;
+          const isOk = payAfterGraceWithFee > 0 && emiAfterGrace <= maxEmi;
+
+          if(isOk){
+            anyOk = true;
+            displayStatus = 'OK';
+            totalPI = Math.round((payAfterGraceWithFee * repayMonths) + (graceEmi31 * gracePeriod));
+            totalInterest = totalPI - totalLoan;
+            interestPerMonth = totalInterest / term;
+          }
+
+          table += `<tr>
+            <td>${term}</td>
+            <td class="topup-emi-grace">${viNumber(Math.round(graceEmi31))}</td>
+            <td class="topup-emi-after">${isOk ? viNumber(Math.round(payAfterGraceWithFee)) : 'N/A'}</td>
+            <td>${repayMonths}</td>
+            <td class="${isOk ? 'ok':'na'}">${displayStatus}</td>
+            <td>${isOk ? viNumber(totalPI) : 'N/A'}</td>
+            <td>${isOk ? viNumber(Math.round(totalInterest)) : 'N/A'}</td>
+            <td>${isOk ? viNumber(Math.round(interestPerMonth)) : 'N/A'}</td>
+          </tr>`;
+        } else {
+          table += `<tr>
+            <td>${term}</td>
+            <td class="topup-emi-grace">${viNumber(Math.round(graceEmi31))}</td>
+            <td class="topup-emi-after">N/A</td>
+            <td>${repayMonths}</td>
+            <td class="na">N/A</td>
+            <td>N/A</td>
+            <td>N/A</td>
+            <td>N/A</td>
+          </tr>`;
+        }
+      });
+      table += '</tbody></table>';
+
+      document.getElementById('topupSummary').innerHTML = `
+        <div class="row">
+          <div class="pill">LOAN: <b>${viNumber(loan)}</b> VND</div>
+          <div class="pill">INS: <b>${viNumber(Math.round(insurance))}</b> VND</div>
+          <div class="pill">Tổng tiền vay: <b>${viNumber(Math.round(totalLoan))}</b> VND</div>
+          <div class="pill">Max EMI: <b>${viNumber(Math.round(maxEmi))}</b> VND</div>
+          <div class="pill">EMI ân hạn 31 ngày: <b>${viNumber(Math.round(graceEmi31))}</b> VND</div>
+        </div>
+        <div class="mini-head">Số tiền mỗi tháng thanh toán trong thời gian ân hạn</div>
+        <div class="row">
+          <div class="pill">31 ngày: <b>${viNumber(Math.round(graceEmi31))}</b></div>
+          <div class="pill">30 ngày: <b>${viNumber(Math.round(graceEmi30))}</b></div>
+          <div class="pill">29 ngày: <b>${viNumber(Math.round(graceEmi29))}</b></div>
+          <div class="pill">28 ngày: <b>${viNumber(Math.round(graceEmi28))}</b></div>
+        </div>
+        ${anyOk ? '' : '<div class="warn" style="margin-top:12px">Hiện chưa có kỳ hạn nào đạt điều kiện OK. Theo file Excel, nên chọn kỳ hạn vay lớn hơn (6 + số kỳ ân hạn), và kỳ hạn càng dài thì EMI càng nhỏ.</div>'}
+      `;
+      document.getElementById('topupResult').innerHTML = table;
+    }
+
+    function resetTopup(){
+      document.getElementById('topupCurrentEmi').value = '';
+      document.getElementById('topupInterestRate').value = '41';
+      document.getElementById('topupGracePeriod').value = '8';
+      document.getElementById('topupLoan').value = '';
+      document.getElementById('topupInsuranceYesNo').value = 'YES';
+      document.getElementById('topupInsuranceRate').value = '7.7';
+      document.getElementById('topupSummary').innerHTML = '';
+      document.getElementById('topupResult').innerHTML = '';
+    }
+
+    ['loanAmount','topupCurrentEmi','topupLoan'].forEach(id=>{
+      document.getElementById(id).addEventListener('input', function(e){
+        let value = e.target.value.replace(/\D/g,'');
+        if(value){ e.target.value = Number(value).toLocaleString('vi-VN'); }
+        else { e.target.value = ''; }
+      });
+    });
+
+    document.getElementById('btnCalc').addEventListener('click',calculateLoan);
+    document.getElementById('btnExcel').addEventListener('click',exportExcel);
+    document.getElementById('btnCSV').addEventListener('click',exportCSV);
+    document.getElementById('btnPDF').addEventListener('click',exportPDF);
+    document.getElementById('btnReset').addEventListener('click',resetForm);
+    document.getElementById('btnToday').addEventListener('click',fillToday);
+
+    document.getElementById('btnCalcTopup').addEventListener('click', calculateTopup);
+    document.getElementById('btnResetTopup').addEventListener('click', resetTopup);
+
+    window.addEventListener('DOMContentLoaded', ()=>{
+      fillToday();
+      document.getElementById('topupSummary').innerHTML = '';
+      document.getElementById('topupResult').innerHTML = '';
+    });
+  </script>
 </body>
 </html>
