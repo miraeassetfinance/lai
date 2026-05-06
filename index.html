@@ -22,12 +22,9 @@
     body{
       margin:0;
       font-family:Arial, Helvetica, sans-serif;
-      background-image: url('https://img.upanhnhanh.com/786defa712ad8f422de14c8f6834b47c');
-      background-repeat: no-repeat;
-      background-size: cover;
-      background-position: center;
-      color: var(--text);
-      line-height: 1.5;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.5;
     }
 
     .marquee{width:100vw; overflow:hidden; background:var(--primary); color:#fff; padding:12px 0; font-weight:bold; font-size:16px}
@@ -163,12 +160,10 @@
   </style>
 </head>
 <body>
-  <!-- Marquee -->
   <div class="marquee">
     <div class="marquee-content">💸 Chào mừng đến với công cụ Tính Lãi Suất của Team Mirae Asset NGỌC TRÂN! 📞 Liên hệ Zalo: 0964307247 để được hỗ trợ nhanh chóng và uy tín! 🚀</div>
   </div>
 
-  <!-- Tab Buttons -->
   <div class="tabbar-wrap">
     <div class="tabbar">
       <button class="tab-btn active" data-tab="panel-normal">Tính Lãi Suất PL</button>
@@ -176,7 +171,6 @@
     </div>
   </div>
 
-  <!-- Panel for PL Loan Calculation -->
   <div class="container panel active" id="panel-normal">
     <div class="title-wrap">
       <h1>Công Cụ Tính Lãi Suất PL</h1>
@@ -214,7 +208,6 @@
 
   <div id="result"></div>
 
-  <!-- Panel for Topup Loan Calculation -->
   <div class="container panel" id="panel-topup">
     <div class="title-wrap">
       <h1>Tính Lãi TOPUP</h1>
@@ -270,7 +263,6 @@
     <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Icon_of_Zalo.svg" alt="Zalo" />
   </a>
 
-  <!-- Lượt Truy Cập -->
   <div style="text-align:center; margin:20px 0;">
     <div style="font-weight:bold; margin-bottom:6px;">Lượt Truy Cập</div>
     <a href="https://www.hitwebcounter.com/compress-pdf" target="_blank">
@@ -285,14 +277,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
   <script>
-    // Tự động chọn ngày hiện tại
-    window.addEventListener('DOMContentLoaded', () => {
-      const today = new Date().toISOString().split('T')[0];
-      document.getElementById('disbursalDate').value = today;
-      const firstEmiDate = new Date(today);
-      firstEmiDate.setDate(firstEmiDate.getDate() + 30);
-      document.getElementById('firstEmiDate').value = firstEmiDate.toISOString().split('T')[0];
-    });
+    // Your JS code here
   </script>
 </body>
 </html>
