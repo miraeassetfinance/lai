@@ -167,9 +167,6 @@
       padding: 8px;
     }
     .zalo-icon:hover { transform: scale(1.1); }
-
-    .topup-emi-grace{background:#fff8cc !important}
-    .topup-emi-after{background:#e8f4ff !important}
   
     button:hover{
       transform:translateY(-2px);
@@ -464,8 +461,8 @@
       let table = `<table><thead>
         <tr>
           <th>Kỳ hạn vay</th>
-          <th class="topup-emi-grace">EMI trong ân hạn</th>
-          <th class="topup-emi-after">EMI sau ân hạn</th>
+          <<th>EMI trong ân hạn</th>
+          <th>EMI sau ân hạn</th>
           <th>Số tháng góp</th>
           <th>Trạng thái</th>
           <th>Tổng gốc lãi</th>
@@ -498,8 +495,8 @@
 
           table += `<tr>
             <td>${term}</td>
-            <td class="topup-emi-grace">${viNumber(Math.round(graceEmi31))}</td>
-            <td class="topup-emi-after">${isOk ? viNumber(Math.round(payAfterGraceWithFee)) : 'N/A'}</td>
+            <td>${viNumber(Math.round(graceEmi31))}</td>
+            <td>${isOk ? viNumber(Math.round(payAfterGraceWithFee)) : 'N/A'}</td>
             <td>${repayMonths}</td>
             <td class="${isOk ? 'ok':'na'}">${displayStatus}</td>
             <td>${isOk ? viNumber(totalPI) : 'N/A'}</td>
@@ -509,8 +506,8 @@
         } else {
           table += `<tr>
             <td>${term}</td>
-            <td class="topup-emi-grace">${viNumber(Math.round(graceEmi31))}</td>
-            <td class="topup-emi-after">N/A</td>
+            <td>${viNumber(Math.round(graceEmi31))}</td>
+            <td>N/A</td>
             <td>${repayMonths}</td>
             <td class="na">N/A</td>
             <td>N/A</td>
