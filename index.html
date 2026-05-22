@@ -574,28 +574,47 @@
     });
   </script>
   <script>
-  const matKhauDung = "12344321"; // đổi mật khẩu tại đây
 
-  let nhapMatKhau = prompt("🔒 Vui lòng nhập mật khẩu để truy cập:");
+  // mật khẩu đúng
+  const matKhauDung = "12344321";
 
-  if (nhapMatKhau !== matKhauDung) {
-    document.body.innerHTML = `
-      <div style="
-        display:flex;
-        justify-content:center;
-        align-items:center;
-        height:100vh;
-        background:#081120;
-        color:white;
-        font-family:Arial;
-        flex-direction:column;
-      ">
-        <h1>❌ Sai mật khẩu</h1>
-        <p>Bạn không có quyền truy cập website này.</p>
-      </div>
-    `;
-    throw new Error("Sai mật khẩu");
+  // kiểm tra đã đăng nhập trước đó chưa
+  const daDangNhap = localStorage.getItem("daDangNhap");
+
+  // nếu chưa đăng nhập thì hỏi mật khẩu
+  if(daDangNhap !== "true"){
+
+    let nhapMatKhau = prompt("🔒 Vui lòng nhập mật khẩu để truy cập:");
+
+    if (nhapMatKhau === matKhauDung) {
+
+      // lưu trạng thái đăng nhập
+      localStorage.setItem("daDangNhap", "true");
+
+    } else {
+
+      document.body.innerHTML = `
+        <div style="
+          display:flex;
+          justify-content:center;
+          align-items:center;
+          height:100vh;
+          background:#081120;
+          color:white;
+          font-family:Arial;
+          flex-direction:column;
+        ">
+          <h1>❌ Sai mật khẩu</h1>
+          <p>Bạn không có quyền truy cập website này.</p>
+        </div>
+      `;
+
+      throw new Error("Sai mật khẩu");
+
+    }
+
   }
+
 </script>
 </body>
 </html>
