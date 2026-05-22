@@ -573,5 +573,29 @@
       document.getElementById('topupResult').innerHTML = '';
     });
   </script>
+  <script>
+  const matKhauDung = "12344321"; // đổi mật khẩu tại đây
+
+  let nhapMatKhau = prompt("🔒 Vui lòng nhập mật khẩu để truy cập:");
+
+  if (nhapMatKhau !== matKhauDung) {
+    document.body.innerHTML = `
+      <div style="
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        height:100vh;
+        background:#081120;
+        color:white;
+        font-family:Arial;
+        flex-direction:column;
+      ">
+        <h1>❌ Sai mật khẩu</h1>
+        <p>Bạn không có quyền truy cập website này.</p>
+      </div>
+    `;
+    throw new Error("Sai mật khẩu");
+  }
+</script>
 </body>
 </html>
