@@ -1,9 +1,3 @@
-
-
-
-
-
-
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -84,23 +78,6 @@ padding:7px 12px;color:#14577f;font-size:14px
 </style>
 </head>
 <body>
-
-<!-- PASSWORD LOCK: chỉ bổ sung chức năng khóa truy cập -->
-<div id="sitePasswordLock" style="position:fixed;inset:0;z-index:2147483647;background:#061b46;display:flex;align-items:center;justify-content:center;padding:20px;font-family:Arial,sans-serif;">
-  <div style="width:100%;max-width:400px;background:#fff;border-radius:16px;padding:30px;box-shadow:0 15px 50px rgba(0,0,0,.35);text-align:center;">
-    <div style="font-size:48px;margin-bottom:12px;">🔐</div>
-    <h2 style="margin:0 0 8px;color:#123766;">NHẬP MẬT KHẨU</h2>
-    <p style="margin:0 0 18px;color:#64748b;font-size:14px;">Vui lòng nhập mật khẩu để sử dụng website</p>
-    <input id="sitePasswordInput" type="password" placeholder="Nhập mật khẩu"
-      style="width:100%;height:50px;border:1px solid #ccd7e4;border-radius:9px;padding:0 14px;font-size:16px;outline:none;"
-      onkeydown="if(event.key==='Enter'){event.preventDefault();document.getElementById('siteUnlockButton').click();}">
-    <button id="siteUnlockButton" type="button"
-      style="width:100%;height:50px;margin-top:12px;border:0;border-radius:9px;background:#0868d9;color:#fff;font-weight:700;font-size:15px;cursor:pointer;">
-      MỞ KHÓA
-    </button>
-    <div id="sitePasswordError" style="display:none;margin-top:10px;color:#e33;font-size:13px;font-weight:700;">Mật khẩu không đúng!</div>
-  </div>
-</div>
 
 <header class="header">
 <div class="brand"><h1>TÍNH LÃI SUẤT</h1><p>Công cụ tính lãi vay nhanh chóng - chính xác - minh bạch</p></div>
@@ -268,7 +245,6 @@ Từ <strong id="idcardMonthlyMin">0 VND</strong> đến <strong id="idcardMonth
 
 <script>
 const API_BASE='https://tinh-lai-api.thien-miraeasset.workers.dev';
-const TOKEN_KEY='tlsAuthToken';
 const $=id=>document.getElementById(id);
 const fmt=n=>Math.round(Number(n)||0).toLocaleString('vi-VN');
 const num=s=>Number(String(s??'').replace(/\./g,'').replace(/,/g,'.'))||0;
@@ -277,8 +253,7 @@ function moneyInput(el){let v=String(el.value).replace(/\D/g,'');el.value=v?Numb
 function page(id,btn){document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));$(id).classList.add('active');document.querySelectorAll('.nav button').forEach(x=>x.classList.remove('active'));btn.classList.add('active');window.scrollTo({top:0,behavior:'smooth'})}
 function iso(d){return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`}
 function dueDateFromApi(v){let [y,m,d]=String(v).split('-').map(Number);return new Date(y,m-1,d)}
-function showPasswordLock(message=''){localStorage.removeItem(TOKEN_KEY);let lock=$('sitePasswordLock');lock.style.display='flex';lock.style.pointerEvents='auto';$('sitePasswordError').textContent=message||'Phiên đăng nhập đã hết hạn. Vui lòng nhập lại mật khẩu!';$('sitePasswordError').style.display=message?'block':'none';setTimeout(()=>$('sitePasswordInput').focus(),50)}
-async function apiPost(path,body){const token=localStorage.getItem(TOKEN_KEY)||'';const res=await fetch(API_BASE+path,{method:'POST',headers:{'Content-Type':'application/json',...(token?{'Authorization':'Bearer '+token}:{})},body:JSON.stringify(body)});let data={};try{data=await res.json()}catch(e){}if(res.status===401&&path!='/login'){showPasswordLock('Phiên đăng nhập đã hết hạn. Vui lòng nhập lại mật khẩu!');throw new Error('UNAUTHORIZED')}if(!res.ok)throw new Error(data.error||'Không thể kết nối máy chủ.');return data}
+async function apiPost(path,body){const res=await fetch(API_BASE+path,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});let data={};try{data=await res.json()}catch(e){}if(!res.ok)throw new Error(data.error||'Không thể kết nối máy chủ.');return data}
 async function calcPL(){const loan=num($('plLoan').value),insPct=percentNum($('plIns').value),rate=percentNum($('plRate').value),tenure=parseInt($('plTenure').value||0);if(!loan||!tenure||rate<=0){alert('Vui lòng nhập đủ Số tiền vay, Lãi suất và Số kỳ vay.');return false}if(!$('plDisb').value||!$('plFirst').value){alert('Vui lòng nhập Ngày Giải Ngân và Ngày Ký Đóng Đầu Tiên.');return false}try{const response=await apiPost('/pl',{loan,insPct,rate,tenure,disb:$('plDisb').value,first:$('plFirst').value});const result=response.result;const rows=(result.rows||[]).map(r=>({...r,due:dueDateFromApi(r.due)}));$('plPillTotal').textContent=fmt(result.principal)+' VND';$('plPillPeriods').textContent=tenure;$('plPillPayment').textContent=fmt(result.customerEmi)+' VND';renderPL(rows);if($('plSave').checked)localStorage.setItem('plData',JSON.stringify({disb:$('plDisb').value,first:$('plFirst').value,loan:$('plLoan').value,ins:$('plIns').value,rate:$('plRate').value,tenure:$('plTenure').value}));window.PL_ROWS=rows;window.PL_META={principal:result.principal,loan:result.loan,insurance:result.insurance,emi:result.emi};return true}catch(e){if(e.message!=='UNAUTHORIZED')alert('Không tính được PL: '+e.message);return false}}
 function renderPL(rows){let h='<thead><tr><th>Kỳ</th><th>Ngày đến hạn</th><th>EMI khoản vay</th><th>Tổng đóng</th><th>Dư nợ cuối kỳ</th></tr></thead><tbody>';rows.forEach(r=>h+=`<tr><td>${r.i}</td><td>${r.due.toLocaleDateString('vi-VN')}</td><td>${fmt(r.payment)}</td><td>${fmt(r.customerPayment)}</td><td>${fmt(r.closing)}</td></tr>`);h+='</tbody>';$('plSchedule').innerHTML=h;$('plScheduleWrap').style.display='block'}
 async function excelPL(){if(!window.PL_ROWS){const ok=await calcPL();if(!ok||!window.PL_ROWS)return}const data=window.PL_ROWS.map(r=>({'Kỳ':r.i,'Ngày đến hạn':r.due.toLocaleDateString('vi-VN'),'Số ngày':r.days,'Dư nợ gốc':r.balance,'Gốc':r.principal,'Lãi':r.interest,'EMI':r.payment,'Dư nợ cuối kỳ':r.closing}));const ws=XLSX.utils.json_to_sheet(data),wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,'Lịch trả nợ');XLSX.writeFile(wb,'Tinh_Lai_PL.xlsx')}
@@ -391,10 +366,6 @@ function copyDonateContent(){
 }
 
 window.addEventListener('DOMContentLoaded',()=>{setDefaultDates();const s=localStorage.getItem('plData');if(s)try{let x=JSON.parse(s);$('plDisb').value=x.disb||$('plDisb').value;$('plFirst').value=x.first||$('plFirst').value;$('plLoan').value=x.loan||'';$('plIns').value=x.ins||'7,7';$('plRate').value=x.rate||'52';$('plTenure').value=x.tenure||24}catch(e){}});
-</script>
-
-<script>
-(function(){var lock=document.getElementById('sitePasswordLock'),input=document.getElementById('sitePasswordInput'),button=document.getElementById('siteUnlockButton'),error=document.getElementById('sitePasswordError');if(localStorage.getItem(TOKEN_KEY)){lock.style.display='none';lock.style.pointerEvents='none'}async function unlock(){var password=input.value;if(!password)return;button.disabled=true;button.textContent='ĐANG KIỂM TRA...';error.style.display='none';try{const res=await fetch(API_BASE+'/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({password})});let data={};try{data=await res.json()}catch(e){}if(res.ok&&data.ok&&data.token){localStorage.setItem(TOKEN_KEY,data.token);lock.style.display='none';lock.style.pointerEvents='none';input.value=''}else{error.textContent='Mật khẩu không đúng!';error.style.display='block';input.value='';input.focus()}}catch(e){error.textContent='Không kết nối được máy chủ. Vui lòng thử lại!';error.style.display='block'}finally{button.disabled=false;button.textContent='MỞ KHÓA'}}button.addEventListener('click',unlock);if(!localStorage.getItem(TOKEN_KEY))input.focus()})();
 </script>
 
 </body>
