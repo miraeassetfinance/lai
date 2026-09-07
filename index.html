@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -113,7 +114,7 @@ padding:7px 12px;color:#14577f;font-size:14px
 <div class="pl-pills" id="plPills">
 <span>Tổng vay + BH: <b id="plPillTotal">0 VND</b></span>
 <span>Số tháng vay: <b id="plPillPeriods">0</b></span>
-<span>Thanh toán mỗi kỳ (đã bao gồm phí thu hộ) ~ <b id="plPillPayment">0 VND</b></span>
+<span>Thanh toán mỗi kỳ (đã bao gồm phí thu hộ) \~ <b id="plPillPayment">0 VND</b></span>
 </div>
 <div class="schedule-wrap" id="plScheduleWrap">
 <div class="note" style="margin-bottom:8px"><i class="fa-solid fa-table"></i><b>Lịch trả nợ chi tiết — Bảng này chỉ mang tính chất tham khảo, Lãi suất tùy theo hồ sơ và chính sách hiện tại.</b></div>
@@ -178,13 +179,13 @@ Khoản vay: <span id="idcardTotal">0 VND</span> • Bảo hiểm 7,7%: <span id
 <div class="idcard-monthly-wrap">
 <div class="idcard-monthly-title">Số tiền đóng hằng tháng</div>
 <div class="idcard-monthly-text">
-Từ <strong id="idcardMonthlyMin">0 VND</strong> đến <strong id="idcardMonthlyMax">0 VND</strong>
+Từ <strong id="idcardMonthlyMin">0 VND</strong>
 </div>
 <div class="idcard-monthly-note">
 <p>
-    <strong>
-        💡 Số tiền đóng hằng tháng sẽ được xác định dựa trên dư nợ và điểm tín dụng của khách hàng tại thời điểm xét duyệt. Mức thanh toán chính thức sẽ được thông báo rõ sau khi hồ sơ được phê duyệt.
-    </strong>
+<strong>
+💡 Số tiền đóng hằng tháng sẽ được xác định dựa trên dư nợ và điểm tín dụng của khách hàng tại thời điểm xét duyệt. Mức thanh toán chính thức sẽ được thông báo rõ sau khi hồ sơ được phê duyệt.
+</strong>
 </p>
 </div>
 </div>
@@ -216,15 +217,15 @@ Từ <strong id="idcardMonthlyMin">0 VND</strong> đến <strong id="idcardMonth
 <div class="bank-row"><span>Nội dung</span><strong>UNGHO ADMIN TLS</strong></div>
 <div class="donate-note"><i class="fa-solid fa-circle-info"></i> Vui lòng kiểm tra đúng thông tin trước khi chuyển khoản. Xin chân thành cảm ơn anh chị em đã đồng hành!</div>
 <div class="donate-actions">
-  <button class="donate-action-btn primary" type="button" onclick="saveDonateQR()">
-    <i class="fa-solid fa-download"></i> LƯU MÃ QR
-  </button>
-  <button class="donate-action-btn secondary" type="button" onclick="copyDonateAccount()">
-    <i class="fa-regular fa-copy"></i> SAO CHÉP STK
-  </button>
-  <button class="donate-action-btn secondary" type="button" onclick="copyDonateContent()">
-    <i class="fa-regular fa-copy"></i> SAO CHÉP NỘI DUNG
-  </button>
+<button class="donate-action-btn primary" type="button" onclick="saveDonateQR()">
+<i class="fa-solid fa-download"></i> LƯU MÃ QR
+</button>
+<button class="donate-action-btn secondary" type="button" onclick="copyDonateAccount()">
+<i class="fa-regular fa-copy"></i> SAO CHÉP STK
+</button>
+<button class="donate-action-btn secondary" type="button" onclick="copyDonateContent()">
+<i class="fa-regular fa-copy"></i> SAO CHÉP NỘI DUNG
+</button>
 </div>
 </div>
 </div>
@@ -235,7 +236,7 @@ Từ <strong id="idcardMonthlyMin">0 VND</strong> đến <strong id="idcardMonth
 
 
 <a class="zalo-float" href="https://zalo.me/0964307247" target="_blank" rel="noopener noreferrer" aria-label="Chat Zalo">
-  Zalo
+Zalo
 </a>
 
 <footer class="footer"><span><i class="fa-solid fa-shield-halved"></i>Tính lãi chuẩn – Giữ niềm tin</span><span>© 2026 Tính Lãi Suất. All rights reserved.</span><span><i class="fa-regular fa-heart"></i>Được tạo bởi Mr.Thiên!</span></footer>
@@ -264,105 +265,104 @@ function setDefaultDates(){let d=new Date(),n=new Date(d.getTime()+30*86400000);
 function quickDate(){setDefaultDates()}
 async function calcTopup(){const emiCurrent=num($('tuEMI').value),rate=percentNum($('tuRate').value),grace=parseInt($('tuGrace').value||0),loan=num($('tuLoan').value),insRate=percentNum($('tuInsRate').value),insurance=$('tuInsurance').value;if(!loan||rate<=0){alert('Vui lòng nhập Số tiền vay TOPUP và Lãi suất.');return false}if(grace<0){alert('Số kỳ ân hạn không hợp lệ.');return false}try{const response=await apiPost('/topup',{emiCurrent,rate,grace,loan,insRate,insurance});const result=response.result,rows=result.rows||[];window.TOP_ROWS=rows;window.TOP_META={loan:result.loan,insurance:result.insurance,totalLoan:result.totalLoan,maxEMI:result.maxEMI,graceEMI:result.grace31,emiCurrent};let h=`<div class="top-pills"><span>LOAN: <b>${fmt(result.loan)} VND</b></span><span>INS: <b>${fmt(result.insurance)} VND</b></span><span>Tổng tiền vay: <b>${fmt(result.totalLoan)} VND</b></span><span>Max EMI: <b>${fmt(result.maxEMI)} VND</b></span><span>EMI ân hạn 31 ngày: <b>${fmt(result.grace31)} VND</b></span></div>`;h+=`<div class="grace-title">Số tiền mỗi tháng thanh toán trong thời gian ân hạn</div><div class="grace-pills"><span>31 ngày: <b>${fmt(result.grace31)}</b></span><span>30 ngày: <b>${fmt(result.grace30)}</b></span><span>29 ngày: <b>${fmt(result.grace29)}</b></span><span>28 ngày: <b>${fmt(result.grace28)}</b></span></div>`;h+='<table class="top-table"><thead><tr><th>Kỳ hạn vay</th><th>EMI trong ân hạn</th><th>EMI sau ân hạn</th><th>Số tháng góp</th><th>Trạng thái</th><th>Tổng gốc + lãi</th><th>Tổng lãi</th><th>Lãi/tháng</th></tr></thead><tbody>';rows.forEach(r=>{h+=`<tr><td>${r.t}</td><td>${fmt(result.grace31)}</td><td>${r.paymentAfter!=null?fmt(r.paymentAfter):'N/A'}</td><td>${r.afterGrace}</td><td class="${r.status==='OK'?'ok':'na'}">${r.status}</td><td>${r.totalGL!=null?fmt(r.totalGL)+' đ':'N/A'}</td><td>${r.interest!=null?fmt(r.interest)+' đ':'N/A'}</td><td>${r.interestMonth!=null?fmt(r.interestMonth)+' đ':'N/A'}</td></tr>`});h+='</tbody></table><div class="note" style="margin-top:12px"><i class="fa-solid fa-circle-info"></i>Kết quả được tính tại máy chủ bảo mật và trả về website để hiển thị.</div>';$('topSummary').innerHTML=h;$('topResult').style.display='block';return true}catch(e){if(e.message!=='UNAUTHORIZED')alert('Không tính được TOPUP: '+e.message);return false}}
 function moneyInputComma(el){
-  const digits=String(el.value||'').replace(/\D/g,'');
-  el.value=digits?Number(digits).toLocaleString('en-US'):'';
+const digits=String(el.value||'').replace(/\D/g,'');
+el.value=digits?Number(digits).toLocaleString('en-US'):'';
 }
 
 function parseMoneyComma(value){
-  return Number(String(value||'').replace(/,/g,''))||0;
+return Number(String(value||'').replace(/,/g,''))||0;
 }
 
 function idcardMonthlyPayment(principal, months, monthlyRate){
-  if(monthlyRate===0) return principal/months;
-  return principal*monthlyRate/(1-Math.pow(1+monthlyRate,-months));
+if(monthlyRate===0) return principal/months;
+return principal*monthlyRate/(1-Math.pow(1+monthlyRate,-months));
 }
 
 function calcIDCard(){
-  const total=parseMoneyComma($('idcardLoan').value);
-  const tenure=parseInt($('idcardTenure').value||0,10);
-  const insuranceRate=7.7;
+const total=parseMoneyComma($('idcardLoan').value);
+const tenure=parseInt($('idcardTenure').value||0,10);
+const insuranceRate=7.7;
 
-  if(total<=0){
-    alert('Vui lòng nhập số tiền vay.');
-    $('idcardLoan').focus();
-    return;
-  }
-  if(!tenure || tenure<1){
-    alert('Vui lòng nhập số kỳ thanh toán.');
-    $('idcardTenure').focus();
-    return;
-  }
+if(total<=0){
+alert('Vui lòng nhập số tiền vay.');
+$('idcardLoan').focus();
+return;
+}
+if(!tenure || tenure<1){
+alert('Vui lòng nhập số kỳ thanh toán.');
+$('idcardTenure').focus();
+return;
+}
 
-  // Tổng khoản vay đã bao gồm bảo hiểm 7,7%
-  const receive=total/(1+insuranceRate/100);
-  const insurance=total-receive;
+// Tổng khoản vay đã bao gồm bảo hiểm 7,7%
+const receive=total/(1+insuranceRate/100);
+const insurance=total-receive;
 
-  // Mức đóng tham khảo tương ứng khoảng lãi 31% đến 58%/năm.
-  // Dùng mức lãi tháng thực tế để khớp bảng IDCARD: 2,65% đến 4,90%/tháng.
-  const minMonthly=idcardMonthlyPayment(total,tenure,0.026525185639017724);
-  const maxMonthly=idcardMonthlyPayment(total,tenure,0.0489932968788311);
+// Lãi suất IDCARD cố định 31,5%/năm.
+const annualRate=31.5/100;
+const monthlyRate=annualRate/12;
+const minMonthly=idcardMonthlyPayment(total,tenure,monthlyRate);
 
-  $('idcardTotal').textContent=fmt(Math.round(total))+' VND';
-  $('idcardInsurance').textContent=fmt(Math.round(insurance))+' VND';
-  $('idcardReceive').textContent=fmt(Math.round(receive))+' VND';
-  $('idcardMonthlyMin').textContent=fmt(Math.round(minMonthly))+' VND';
-  $('idcardMonthlyMax').textContent=fmt(Math.round(maxMonthly))+' VND';
-  $('idcardResult').style.display='block';
+$('idcardTotal').textContent=fmt(Math.round(total))+' VND';
+$('idcardInsurance').textContent=fmt(Math.round(insurance))+' VND';
+$('idcardReceive').textContent=fmt(Math.round(receive))+' VND';
+$('idcardMonthlyMin').textContent=fmt(Math.round(minMonthly))+' VND';
+$('idcardResult').style.display='block';
 }
 
 function resetIDCard(){
-  $('idcardLoan').value='';
-  $('idcardTenure').value='';
-  $('idcardResult').style.display='none';
-  $('idcardLoan').focus();
+$('idcardLoan').value='';
+$('idcardTenure').value='';
+$('idcardResult').style.display='none';
+$('idcardLoan').focus();
 }
 
 function resetTopup(){$('tuEMI').value='2.536.000';$('tuLoan').value='20.000.000';$('tuRate').value='41';$('tuGrace').value='8';$('tuInsurance').value='YES';$('tuInsRate').value='7,7';$('topResult').style.display='none';window.TOP_ROWS=null}
 
 async function saveDonateQR(){
-  const img=document.querySelector('.donate-qr img');
-  if(!img||!img.src){alert('Không tìm thấy mã QR.');return;}
-  try{
-    const res=await fetch(img.src,{mode:'cors'});
-    if(!res.ok)throw new Error();
-    const blob=await res.blob();
-    const url=URL.createObjectURL(blob);
-    const a=document.createElement('a');
-    a.href=url;
-    a.download='VietQR_ung_ho_admin_TLS.png';
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    setTimeout(()=>URL.revokeObjectURL(url),1000);
-  }catch(e){
-    // Fallback: mở ảnh QR trong tab mới để người dùng có thể lưu thủ công
-    window.open(img.src,'_blank','noopener');
-  }
+const img=document.querySelector('.donate-qr img');
+if(!img||!img.src){alert('Không tìm thấy mã QR.');return;}
+try{
+const res=await fetch(img.src,{mode:'cors'});
+if(!res.ok)throw new Error();
+const blob=await res.blob();
+const url=URL.createObjectURL(blob);
+const a=document.createElement('a');
+a.href=url;
+a.download='VietQR_ung_ho_admin_TLS.png';
+document.body.appendChild(a);
+a.click();
+a.remove();
+setTimeout(()=>URL.revokeObjectURL(url),1000);
+}catch(e){
+// Fallback: mở ảnh QR trong tab mới để người dùng có thể lưu thủ công
+window.open(img.src,'_blank','noopener');
+}
 }
 
 async function copyTextDonate(value,successMessage){
-  try{
-    await navigator.clipboard.writeText(value);
-    alert(successMessage);
-  }catch(e){
-    const ta=document.createElement('textarea');
-    ta.value=value;
-    ta.style.position='fixed';
-    ta.style.opacity='0';
-    document.body.appendChild(ta);
-    ta.select();
-    document.execCommand('copy');
-    ta.remove();
-    alert(successMessage);
-  }
+try{
+await navigator.clipboard.writeText(value);
+alert(successMessage);
+}catch(e){
+const ta=document.createElement('textarea');
+ta.value=value;
+ta.style.position='fixed';
+ta.style.opacity='0';
+document.body.appendChild(ta);
+ta.select();
+document.execCommand('copy');
+ta.remove();
+alert(successMessage);
+}
 }
 
 function copyDonateAccount(){
-  copyTextDonate('0964307247','Đã sao chép số tài khoản: 0964307247');
+copyTextDonate('0964307247','Đã sao chép số tài khoản: 0964307247');
 }
 
 function copyDonateContent(){
-  copyTextDonate('UNGHO ADMIN TLS','Đã sao chép nội dung chuyển khoản: UNGHO ADMIN TLS');
+copyTextDonate('UNGHO ADMIN TLS','Đã sao chép nội dung chuyển khoản: UNGHO ADMIN TLS');
 }
 
 window.addEventListener('DOMContentLoaded',()=>{setDefaultDates();const s=localStorage.getItem('plData');if(s)try{let x=JSON.parse(s);$('plDisb').value=x.disb||$('plDisb').value;$('plFirst').value=x.first||$('plFirst').value;$('plLoan').value=x.loan||'';$('plIns').value=x.ins||'7,7';$('plRate').value=x.rate||'52';$('plTenure').value=x.tenure||24}catch(e){}});
@@ -370,3 +370,4 @@ window.addEventListener('DOMContentLoaded',()=>{setDefaultDates();const s=localS
 
 </body>
 </html>
+
