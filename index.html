@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -145,7 +146,7 @@ padding:7px 12px;color:#14577f;font-size:14px
 <div class="card">
 <div class="head">
 <div class="title"><i class="fa-solid fa-id-card"></i>TÍNH IDCARD</div>
-<div class="sub">Khoản vay bao gồm số tiền khách nhận và bảo hiểm khoản vay 7,7%</div>
+<div class="sub">Tổng khoản vay đã bao gồm bảo hiểm khoản vay 7,7%</div>
 </div>
 
 <div class="grid">
@@ -170,7 +171,7 @@ padding:7px 12px;color:#14577f;font-size:14px
 </div>
 
 <div id="idcardResult" class="result idcard-result" style="display:none;">
-<div class="idcard-loan-info">Khoản vay: <span id="idcardLoanAmount">0 VND</span> - Số kỳ đóng: <span id="idcardTenureText">0 tháng</span></div>
+<div class="idcard-loan-info">Số tiền vay: <span id="idcardLoanAmount">0 VND</span> - Số kỳ đóng: <span id="idcardTenureText">0 tháng</span></div>
 <div class="idcard-receive-label">Số tiền khách được nhận</div>
 <div id="idcardReceive" class="idcard-receive-value">0 VND</div>
 <div class="idcard-summary">
@@ -279,11 +280,11 @@ function idcardMonthlyPayment(principal, months, monthlyRate){
 }
 
 function calcIDCard(){
-  const receive=parseMoneyComma($('idcardLoan').value);
+  const total=parseMoneyComma($('idcardLoan').value);
   const tenure=parseInt($('idcardTenure').value||0,10);
   const insuranceRate=7.7;
 
-  if(receive<=0){
+  if(total<=0){
     alert('Vui lòng nhập số tiền vay.');
     $('idcardLoan').focus();
     return;
@@ -294,13 +295,12 @@ function calcIDCard(){
     return;
   }
 
-  // Số tiền nhập là số tiền khách thực nhận.
-  // Bảo hiểm 7,7% được cộng thêm để tạo thành tổng khoản vay.
-  const insurance=receive*insuranceRate/100;
-  const total=receive+insurance;
+  // Tổng khoản vay đã bao gồm bảo hiểm 7,7%
+  const receive=total/(1+insuranceRate/100);
+  const insurance=total-receive;
 
-  // Mức đóng tham khảo tính từ lãi suất 35%/năm.
-  const minMonthly=idcardMonthlyPayment(total,tenure,0.35/12);
+  // Mức đóng tham khảo tính từ lãi suất 31,5%/năm.
+  const minMonthly=idcardMonthlyPayment(total,tenure,0.315/12);
 
   $('idcardLoanAmount').textContent=fmt(Math.round(total))+' VND';
   $('idcardTenureText').textContent=tenure+' tháng';
